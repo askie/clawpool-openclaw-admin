@@ -9,7 +9,7 @@ It is intentionally separate from the channel transport plugin:
 
 If you are reading the channel plugin documentation first, also read:
 
-- `openclaw_plugins/clawpool/README.md`
+- [ClawPool channel plugin README](https://github.com/askie/clawpool-openclaw#readme)
 
 ## Which Package Do I Need?
 
@@ -37,7 +37,7 @@ Recommended order:
 
 For the channel-side setup flow, see:
 
-- `openclaw_plugins/clawpool/README.md`
+- [ClawPool channel plugin README](https://github.com/askie/clawpool-openclaw#readme)
 
 ## Required OpenClaw Setup
 

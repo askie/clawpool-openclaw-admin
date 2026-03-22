@@ -17,13 +17,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/askie/aibot.git",
-    "directory": "openclaw_plugins/clawpool-openclaw-admin"
+    "url": "git+https://github.com/askie/clawpool-openclaw-admin.git"
   },
   "bugs": {
-    "url": "https://github.com/askie/aibot/issues"
+    "url": "https://github.com/askie/clawpool-openclaw-admin/issues"
   },
-  "homepage": "https://github.com/askie/aibot/tree/main/openclaw_plugins/clawpool-openclaw-admin#readme",
+  "homepage": "https://github.com/askie/clawpool-openclaw-admin#readme",
   "files": [
     "LICENSE",
     "README.md",
@@ -39,6 +38,10 @@
     "clean": "node -e \"const fs=require('node:fs'); fs.rmSync('dist', { recursive: true, force: true });\"",
     "build": "npm run clean && esbuild index.ts --bundle --platform=node --format=esm --target=node20 --outfile=dist/index.js --external:openclaw --external:openclaw/*",
     "pack:dry-run": "npm run build && npm pack --dry-run --ignore-scripts",
+    "publish:prepare": "npm run build && node ./scripts/prepare-publish.mjs",
+    "publish:pack": "npm run publish:prepare && npm pack ./.publish/package",
+    "publish:dry-run": "npm run publish:prepare && npm publish ./.publish/package --dry-run --access public",
+    "publish:npm": "npm run publish:prepare && npm publish ./.publish/package --access public",
     "prepack": "npm run build",
     "test": "node --test src/*.test.ts"
   },
@@ -51,7 +54,7 @@
     ],
     "install": {
       "npmSpec": "@dhfpub/clawpool-openclaw-admin",
-      "localPath": "openclaw_plugins/clawpool-openclaw-admin",
+      "localPath": ".",
       "defaultChoice": "npm"
     }
   }

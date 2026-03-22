@@ -57,8 +57,8 @@
   - `npm test` 通过
   - `npm run pack:dry-run` 通过
   - npm `latest` 已更新为 `0.1.1`
-  - OpenClaw 隔离 profile 下从 npm 安装 `@dhfpub/clawpool-openclaw-admin`、启用、`plugins info clawpool-openclaw-admin` 通过
-  - `plugins info clawpool-openclaw-admin` 包含 `Tools: clawpool_group, clawpool_agent_admin`
+  - OpenClaw 隔离 profile 下从 npm 安装 `@dhfpub/clawpool-openclaw-admin`、启用、`plugins info clawpool-admin` 通过
+  - `plugins info clawpool-admin` 包含 `Tools: clawpool_group, clawpool_agent_admin`
 
 ### `0.1.0`（2026-03-17 CST）
 
@@ -73,8 +73,8 @@
   - `npm run pack:dry-run` 通过
   - OpenClaw 隔离 profile 下本地 tarball 安装、启用、`plugins info`、`plugins doctor` 通过
   - OpenClaw 隔离 profile 下从 npm 安装 `@dhfpub/clawpool-openclaw-admin`、启用、`plugins info`、`plugins doctor` 通过
-  - `plugins info clawpool-openclaw-admin` 包含 `Tools: clawpool_group, clawpool_agent_admin`
-  - `openclaw clawpool-openclaw-admin doctor` 在未配置 `channels.clawpool` 的洁净 profile 下输出账户可见性 JSON
+  - `plugins info clawpool-admin` 包含 `Tools: clawpool_group, clawpool_agent_admin`
+  - `openclaw clawpool-admin doctor` 在未配置 `channels.clawpool` 的洁净 profile 下输出账户可见性 JSON
   - npm `latest` 已更新为 `0.1.0`
 
 ## 0. 基本信息（每次后续发布必须填写）
@@ -93,7 +93,7 @@
 - [ ] `openclaw.plugin.json` 合法，且包含 `id`、`skills`、`configSchema`
 - [ ] `package.json` 包含 `openclaw.extensions`
 - [ ] `package.json` 包含 `openclaw.install.npmSpec/localPath/defaultChoice`
-- [ ] 插件已通过 OpenClaw 注册 `clawpool-openclaw-admin` CLI 命令
+- [ ] 插件已通过 OpenClaw 注册 `clawpool-admin` CLI 命令
 - [ ] `openclaw.extensions == ./dist/index.js`
 - [ ] 工具元数据一致：
   - [ ] `openclaw.tools.clawpool_group.optional == true`
@@ -131,7 +131,7 @@
   - 命令：`cd openclaw_plugins/clawpool-openclaw-admin && npm pack --ignore-scripts`
   - 命令：`openclaw --profile <name> plugins install <repo-root>/openclaw_plugins/clawpool-openclaw-admin/*.tgz`
 - [ ] 启用与体检：
-  - 命令：`openclaw --profile <name> plugins enable clawpool-openclaw-admin`
+  - 命令：`openclaw --profile <name> plugins enable clawpool-admin`
   - 命令：`openclaw --profile <name> plugins list`
   - 命令：`openclaw --profile <name> plugins doctor`
 - [ ] required tools 配置验证：
@@ -139,15 +139,15 @@
   - 验收：`tools.alsoAllow` 包含 `message`、`clawpool_query`、`clawpool_group`、`clawpool_agent_admin`
   - 验收：`tools.sessions.visibility == agent`
 - [ ] 工具可见性验证：
-  - 命令：`openclaw --profile <name> plugins info clawpool-openclaw-admin`
+  - 命令：`openclaw --profile <name> plugins info clawpool-admin`
   - 验收：输出包含 `Tools: clawpool_query, clawpool_group, clawpool_agent_admin`
 - [ ] 技能发布验证：
   - 验收：tarball 和本地安装结果都包含 `skills/clawpool-query/SKILL.md`
   - 验收：tarball 和本地安装结果都包含 `skills/clawpool-group-governance/SKILL.md`
   - 验收：tarball 和本地安装结果都包含 `skills/clawpool-agent-admin/SKILL.md`
 - [ ] CLI 回归：
-  - 命令：`openclaw clawpool-openclaw-admin doctor`
-  - 命令：`openclaw clawpool-openclaw-admin create-agent --agent-name release-smoke`
+  - 命令：`openclaw clawpool-admin doctor`
+  - 命令：`openclaw clawpool-admin create-agent --agent-name release-smoke`
 - [ ] 与 `channels.clawpool` 已配置环境完成一次真实 group/admin tool 调用验证
 
 ## 3. 阶段 B：发布到 npm
@@ -167,11 +167,11 @@
 - [ ] 全新安装验证：
   - 命令：`openclaw plugins install @dhfpub/clawpool-openclaw-admin`
 - [ ] 启用与体检：
-  - 命令：`openclaw plugins enable clawpool-openclaw-admin`
+  - 命令：`openclaw plugins enable clawpool-admin`
   - 命令：`openclaw plugins doctor`
 - [ ] 依赖约束验证：
-  - 验收：未配置 `channels.clawpool` 时，`openclaw clawpool-openclaw-admin doctor` 输出 `configured: false` 的账户可见性结果
-  - 验收：已配置 `channels.clawpool` 时，`openclaw clawpool-openclaw-admin doctor` 输出目标账户配置
+  - 验收：未配置 `channels.clawpool` 时，`openclaw clawpool-admin doctor` 输出 `configured: false` 的账户可见性结果
+  - 验收：已配置 `channels.clawpool` 时，`openclaw clawpool-admin doctor` 输出目标账户配置
   - 验收：未启用 required tools 时，README 已明确说明工具不可直接被 agent 调用
 - [ ] 功能回归：
   - [ ] `clawpool_query` 的 `contact_search` / `session_search` / `message_history` 调用正常

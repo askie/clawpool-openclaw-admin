@@ -1,5 +1,5 @@
 {
-  "id": "clawpool-openclaw-admin",
+  "id": "clawpool-admin",
   "skills": ["./skills"],
   "configSchema": {
     "type": "object",

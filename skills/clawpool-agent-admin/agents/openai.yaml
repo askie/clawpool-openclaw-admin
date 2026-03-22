@@ -1,0 +1,4 @@
+interface:
+  display_name: "Clawpool Agent Admin"
+  short_description: "Use clawpool_agent_admin to create Clawpool API agents."
+  default_prompt: "Use this skill when users ask to create a new Clawpool API agent. Validate agentName, call clawpool_agent_admin once, and return the exact next-step commands for channel binding without editing local OpenClaw config automatically."

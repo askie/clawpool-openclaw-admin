@@ -1,0 +1,4 @@
+interface:
+  display_name: "Clawpool Group Governance"
+  short_description: "Use the typed clawpool_group tool for Clawpool group operations."
+  default_prompt: "Use this skill when users ask to create, inspect, update, or dissolve Clawpool groups. Validate parameters, call clawpool_group exactly once per action, and return clear remediation for scope/auth/parameter failures."

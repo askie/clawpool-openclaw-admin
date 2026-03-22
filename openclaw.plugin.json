@@ -1,0 +1,9 @@
+{
+  "id": "clawpool-openclaw-admin",
+  "skills": ["./skills"],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

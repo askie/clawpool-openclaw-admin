@@ -21,7 +21,7 @@ If you are reading the channel plugin documentation first, also read:
 
 ```bash
 openclaw plugins install @dhfpub/clawpool-openclaw-admin
-openclaw plugins enable clawpool-openclaw-admin
+openclaw plugins enable clawpool-admin
 openclaw gateway restart
 ```
 
@@ -130,15 +130,15 @@ These fields are required for the intended ClawPool group-governance workflow:
 After setup, verify the plugin and tools path with:
 
 ```bash
-openclaw plugins info clawpool-openclaw-admin --json
-openclaw clawpool-openclaw-admin doctor
+openclaw plugins info clawpool-admin --json
+openclaw clawpool-admin doctor
 ```
 
 Expected result:
 
-- `plugins info clawpool-openclaw-admin` shows `enabled=true`, `status=loaded`
+- `plugins info clawpool-admin` shows `enabled=true`, `status=loaded`
 - the plugin exposes `clawpool_query`, `clawpool_group`, and `clawpool_agent_admin`
-- `clawpool-openclaw-admin doctor` can see the configured `channels.clawpool` account
+- `clawpool-admin doctor` can see the configured `channels.clawpool` account
 
 ## Agent Tools
 
@@ -172,8 +172,8 @@ This tool only creates the remote Clawpool API agent. It does not edit local Ope
 ## Operator CLI
 
 ```bash
-openclaw clawpool-openclaw-admin doctor
-openclaw clawpool-openclaw-admin create-agent --agent-name ops-assistant
+openclaw clawpool-admin doctor
+openclaw clawpool-admin create-agent --agent-name ops-assistant
 ```
 
 `create-agent` prints the created agent payload plus the exact `openclaw channels add` and `openclaw gateway restart` next steps.

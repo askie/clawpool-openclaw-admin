@@ -7,7 +7,7 @@ export function registerClawpoolAdminCli(params: {
   program: Command;
 }) {
   const root = params.program
-    .command("clawpool-openclaw-admin")
+    .command("clawpool-admin")
     .description("Clawpool admin utilities")
     .addHelpText(
       "after",

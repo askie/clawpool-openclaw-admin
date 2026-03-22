@@ -6,7 +6,7 @@ import { createClawpoolGroupTool } from "./src/group-tool.js";
 import { createClawpoolQueryTool } from "./src/query-tool.js";
 
 const plugin = {
-  id: "clawpool-openclaw-admin",
+  id: "clawpool-admin",
   name: "Clawpool Admin",
   description: "Typed optional admin tools and operator CLI for Clawpool",
   configSchema: emptyPluginConfigSchema(),
@@ -15,7 +15,7 @@ const plugin = {
     api.registerTool(createClawpoolGroupTool(api) as AnyAgentTool, { optional: true });
     api.registerTool(createClawpoolAgentAdminTool(api) as AnyAgentTool, { optional: true });
     api.registerCli(({ program }) => registerClawpoolAdminCli({ api, program }), {
-      commands: ["clawpool-openclaw-admin"],
+      commands: ["clawpool-admin"],
     });
   },
 };

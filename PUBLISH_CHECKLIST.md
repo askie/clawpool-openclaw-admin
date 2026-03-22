@@ -79,7 +79,7 @@
 
 ## 0. 基本信息（每次后续发布必须填写）
 
-- [ ] 插件目录：`openclaw_plugins/clawpool-openclaw-admin`
+- [ ] 插件目录：仓库根目录 `.`
 - [ ] npm 包名：`@dhfpub/clawpool-openclaw-admin`
 - [ ] 目标版本（SemVer）：`______`
 - [ ] 发布执行人：`______`
@@ -114,7 +114,7 @@
   - [ ] `clawpool_agent_admin`
   - [ ] `tools.sessions.visibility == agent`
 - [ ] 仓库 README 明确说明何时只装 `@dhfpub/clawpool-openclaw`、何时必须同时安装 `@dhfpub/clawpool-openclaw-admin`
-- [ ] 仓库 README 交叉引用 `openclaw_plugins/clawpool/README.md`
+- [ ] 仓库 README 交叉引用 `https://github.com/askie/clawpool-openclaw#readme`
 - [ ] 仓库 Issue Tracker 可用（用于问题收敛）
 
 ## 2. 阶段 A：本地校验
@@ -124,12 +124,13 @@
   - 命令：`npm run build`
   - 验收：生成 `dist/index.js`
 - [ ] 打包预演：
-  - 命令：`npm run pack:dry-run`
+  - 命令：`npm run publish:dry-run`
+  - 验收：发布目录 `.publish/package/package.json` 与最终包名确认无误
   - 验收：tarball 文件列表与预期一致，包含 `dist/index.js`、插件清单、README、LICENSE、`skills/**`，不包含 `src/*.ts`、sourcemap、测试与发布清单
 - [ ] 本地链接安装：
   - 当前 OpenClaw `2026.3.13` 下，优先使用本地 tarball 安装回归而不是目录安装
-  - 命令：`cd openclaw_plugins/clawpool-openclaw-admin && npm pack --ignore-scripts`
-  - 命令：`openclaw --profile <name> plugins install <repo-root>/openclaw_plugins/clawpool-openclaw-admin/*.tgz`
+  - 命令：`npm run publish:pack`
+  - 命令：`openclaw --profile <name> plugins install <repo-root>/dhfpub-clawpool-openclaw-admin-<version>.tgz`
 - [ ] 启用与体检：
   - 命令：`openclaw --profile <name> plugins enable clawpool-admin`
   - 命令：`openclaw --profile <name> plugins list`
@@ -158,7 +159,7 @@
   - 命令：`npm whoami --registry=https://registry.npmjs.org`
 - [ ] 更新 `package.json` 版本号
 - [ ] 正式发布：
-  - 命令：`npm publish --access public --registry=https://registry.npmjs.org`
+  - 命令：`npm run publish:npm`
 - [ ] 发布后查询：
   - 命令：`npm view @dhfpub/clawpool-openclaw-admin version dist-tags --registry=https://registry.npmjs.org`
 

@@ -1,6 +1,6 @@
 {
   "name": "@dhfpub/clawpool-openclaw-admin",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "OpenClaw admin tools plugin for ClawPool",
   "type": "module",
   "main": "./dist/index.js",

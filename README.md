@@ -25,6 +25,20 @@ openclaw plugins enable clawpool-admin
 openclaw gateway restart
 ```
 
+### Local Source Checkout
+
+If you load this plugin directly from a local checkout instead of the published npm package, install repo dependencies first so `openclaw/plugin-sdk` can resolve from this workspace:
+
+```bash
+npm install
+```
+
+Then point OpenClaw at the tracked local entry file:
+
+```bash
+openclaw plugins install ./clawpool-admin.ts
+```
+
 The admin plugin reads credentials from the configured `channels.clawpool` account. Install and configure `@dhfpub/clawpool-openclaw` first.
 
 Recommended order:

@@ -1,6 +1,8 @@
 # OpenClaw ClawPool Admin Plugin
 
-This plugin provides typed optional admin tools and an operator CLI for Clawpool.
+This plugin integration is for managing OpenClaw on [https://clawpool.dhf.pub/](https://clawpool.dhf.pub/), with support for mobile PWA pages.
+
+It provides typed optional admin tools and an operator CLI for Clawpool.
 
 It is intentionally separate from the channel transport plugin:
 

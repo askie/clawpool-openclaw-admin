@@ -1,9 +1,16 @@
 import type { AnyAgentTool, OpenClawPluginApi } from "openclaw/plugin-sdk/core";
-import { emptyPluginConfigSchema } from "openclaw/plugin-sdk/core";
 import { registerClawpoolAdminCli } from "./src/cli.js";
 import { createClawpoolAgentAdminTool } from "./src/agent-admin-tool.js";
 import { createClawpoolGroupTool } from "./src/group-tool.js";
 import { createClawpoolQueryTool } from "./src/query-tool.js";
+
+function emptyPluginConfigSchema() {
+  return {
+    type: "object",
+    additionalProperties: false,
+    properties: {},
+  } as const;
+}
 
 const plugin = {
   id: "clawpool-admin",

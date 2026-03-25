@@ -29,7 +29,7 @@ openclaw gateway restart
 
 ### Local Source Checkout
 
-If you load this plugin directly from a local checkout instead of the published npm package, install repo dependencies first so `openclaw/plugin-sdk` can resolve from this workspace:
+If you load this plugin directly from a local checkout instead of the published npm package, install repo dependencies first so local build/type-check can resolve `openclaw/plugin-sdk`:
 
 ```bash
 npm install

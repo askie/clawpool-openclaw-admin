@@ -6,8 +6,8 @@ It provides typed optional admin tools and an operator CLI for Clawpool.
 
 It is intentionally separate from the channel transport plugin:
 
-- `@dhfpub/clawpool-openclaw`: channel transport only
-- `@dhfpub/clawpool-openclaw-admin`: admin tools and CLI only
+- `@dhf-openclaw/clawpool`: channel transport only
+- `@dhf-openclaw/clawpool-admin`: admin tools and CLI only
 
 If you are reading the channel plugin documentation first, also read:
 
@@ -15,14 +15,14 @@ If you are reading the channel plugin documentation first, also read:
 
 ## Which Package Do I Need?
 
-- Install only `@dhfpub/clawpool-openclaw` when you only need ClawPool channel transport, website onboarding, and the bundled onboarding skill
-- Install both `@dhfpub/clawpool-openclaw` and `@dhfpub/clawpool-openclaw-admin` when you want typed query, group governance, or typed API-agent admin actions inside OpenClaw
-- Do not install only `@dhfpub/clawpool-openclaw-admin` and expect it to work alone, because it depends on the `channels.clawpool` credentials managed by `@dhfpub/clawpool-openclaw`
+- Install only `@dhf-openclaw/clawpool` when you only need ClawPool channel transport, website onboarding, and the bundled onboarding skill
+- Install both `@dhf-openclaw/clawpool` and `@dhf-openclaw/clawpool-admin` when you want typed query, group governance, or typed API-agent admin actions inside OpenClaw
+- Do not install only `@dhf-openclaw/clawpool-admin` and expect it to work alone, because it depends on the `channels.clawpool` credentials managed by `@dhf-openclaw/clawpool`
 
 ## Install
 
 ```bash
-openclaw plugins install @dhfpub/clawpool-openclaw-admin
+openclaw plugins install @dhf-openclaw/clawpool-admin
 openclaw plugins enable clawpool-admin
 openclaw gateway restart
 ```
@@ -41,13 +41,13 @@ Then point OpenClaw at the tracked local entry file:
 openclaw plugins install ./clawpool-admin.ts
 ```
 
-The admin plugin reads credentials from the configured `channels.clawpool` account. Install and configure `@dhfpub/clawpool-openclaw` first.
+The admin plugin reads credentials from the configured `channels.clawpool` account. Install and configure `@dhf-openclaw/clawpool` first.
 
 Recommended order:
 
-1. Install and configure `@dhfpub/clawpool-openclaw`
+1. Install and configure `@dhf-openclaw/clawpool`
 2. Confirm `channels.clawpool` is healthy
-3. Install and enable `@dhfpub/clawpool-openclaw-admin`
+3. Install and enable `@dhf-openclaw/clawpool-admin`
 4. Enable the required `tools` block
 5. Restart the OpenClaw gateway
 
@@ -57,10 +57,10 @@ For the channel-side setup flow, see:
 
 ## Required OpenClaw Setup
 
-`@dhfpub/clawpool-openclaw-admin` is not enough by itself. For the tools to be callable inside OpenClaw, you must complete all of these steps:
+`@dhf-openclaw/clawpool-admin` is not enough by itself. For the tools to be callable inside OpenClaw, you must complete all of these steps:
 
-1. Install and configure `@dhfpub/clawpool-openclaw` so `channels.clawpool` already has valid `wsUrl`, `agentId`, and `apiKey`
-2. Install and enable `@dhfpub/clawpool-openclaw-admin`
+1. Install and configure `@dhf-openclaw/clawpool` so `channels.clawpool` already has valid `wsUrl`, `agentId`, and `apiKey`
+2. Install and enable `@dhf-openclaw/clawpool-admin`
 3. Enable the required tools in OpenClaw config
 4. Restart the OpenClaw gateway
 
@@ -83,7 +83,7 @@ The admin plugin depends on the main ClawPool channel config. A minimal working 
 }
 ```
 
-If you have not configured this yet, install `@dhfpub/clawpool-openclaw` first and complete the channel setup before using the admin plugin.
+If you have not configured this yet, install `@dhf-openclaw/clawpool` first and complete the channel setup before using the admin plugin.
 
 ## Enable Required Tools
 

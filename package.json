@@ -1,5 +1,5 @@
 {
-  "name": "@dhfpub/clawpool-openclaw-admin",
+  "name": "@dhf-openclaw/clawpool-admin",
   "version": "0.2.5",
   "description": "OpenClaw admin tools plugin for ClawPool",
   "type": "module",
@@ -57,7 +57,7 @@
       "./dist/index.js"
     ],
     "install": {
-      "npmSpec": "@dhfpub/clawpool-openclaw-admin",
+      "npmSpec": "@dhf-openclaw/clawpool-admin",
       "localPath": ".",
       "defaultChoice": "npm"
     }

@@ -63,7 +63,7 @@ export async function createClawpoolApiAgent(params: {
     nextSteps:
       agentName && apiEndpoint && agentId && apiKey
         ? [
-            "Install and enable the channel plugin if it is not installed yet: `openclaw plugins install @dhfpub/clawpool-openclaw && openclaw plugins enable clawpool`.",
+            "Install and enable the channel plugin if it is not installed yet: `openclaw plugins install @dhf-openclaw/clawpool && openclaw plugins enable clawpool`.",
             `Bind the new API agent to OpenClaw with: \`${buildChannelBootstrapCommand({
               channelName: `clawpool-${agentName}`,
               apiEndpoint,

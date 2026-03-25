@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR=$(cd "$(dirname "$0")" && pwd)
 AUTH_HELPER_SCRIPT="${ROOT_DIR}/scripts/npm-publish.exp"
 REGISTRY="https://registry.npmjs.org/"
-PACKAGE_SCOPE="@dhfpub"
+PACKAGE_SCOPE="@dhf-openclaw"
 MODE="${1:-publish}"
 
 run_with_auto_browser_auth() {
@@ -40,7 +40,7 @@ if [[ -n "$(git status -s)" ]]; then
 fi
 
 if [[ "${MODE}" == "--dry-run" ]]; then
-  echo "=> Dry-running @dhfpub/clawpool-openclaw-admin publish..."
+  echo "=> Dry-running @dhf-openclaw/clawpool-admin publish..."
   npm run publish:dry-run
   echo "=> Dry-run completed."
   exit 0
@@ -51,7 +51,7 @@ if [[ "${MODE}" != "publish" ]]; then
   exit 1
 fi
 
-echo "=> Publishing @dhfpub/clawpool-openclaw-admin to NPM (Public)..."
+echo "=> Publishing @dhf-openclaw/clawpool-admin to NPM (Public)..."
 ensure_registry_login
 run_with_auto_browser_auth npm run publish:npm
 

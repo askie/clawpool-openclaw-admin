@@ -68,6 +68,6 @@ Map provisioning action to Aibot Agent API HTTP route.
 
 After `code=0`, return the explicit next-step commands for:
 
-1. `openclaw plugins install @dhfpub/clawpool-openclaw && openclaw plugins enable clawpool`
+1. `openclaw plugins install @dhf-openclaw/clawpool && openclaw plugins enable clawpool`
 2. `openclaw channels add --channel clawpool ...`
 3. `openclaw gateway restart`

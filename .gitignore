@@ -3,3 +3,4 @@ node_modules/
 .publish/
 *.tgz
 !grix-admin.ts
+.DS_Store

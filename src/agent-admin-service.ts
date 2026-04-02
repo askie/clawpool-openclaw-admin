@@ -1,9 +1,9 @@
 import { buildAgentHTTPRequest } from "./agent-api-actions.js";
 import { callAgentAPI } from "./agent-api-http.js";
-import { resolveClawpoolAccount, summarizeClawpoolAccounts } from "./accounts.js";
+import { resolveGrixAccount, summarizeGrixAccounts } from "./accounts.js";
 import type { OpenClawCoreConfig } from "./types.js";
 
-export type ClawpoolAgentAdminToolParams = {
+export type GrixAgentAdminToolParams = {
   accountId?: string;
   agentName?: string;
   avatarUrl?: string;
@@ -17,7 +17,7 @@ function buildChannelBootstrapCommand(params: {
 }): string {
   return [
     "openclaw channels add",
-    "--channel clawpool",
+    "--channel grix",
     `--name ${JSON.stringify(params.channelName)}`,
     `--http-url ${JSON.stringify(params.apiEndpoint)}`,
     `--user-id ${JSON.stringify(params.agentId)}`,
@@ -25,19 +25,19 @@ function buildChannelBootstrapCommand(params: {
   ].join(" ");
 }
 
-export async function createClawpoolApiAgent(params: {
+export async function createGrixApiAgent(params: {
   cfg: OpenClawCoreConfig;
-  toolParams: ClawpoolAgentAdminToolParams;
+  toolParams: GrixAgentAdminToolParams;
 }) {
-  const account = resolveClawpoolAccount({
+  const account = resolveGrixAccount({
     cfg: params.cfg,
     accountId: params.toolParams.accountId,
   });
   if (!account.enabled) {
-    throw new Error(`Clawpool account "${account.accountId}" is disabled.`);
+    throw new Error(`Grix account "${account.accountId}" is disabled.`);
   }
   if (!account.configured) {
-    throw new Error(`Clawpool account "${account.accountId}" is not configured.`);
+    throw new Error(`Grix account "${account.accountId}" is not configured.`);
   }
 
   const request = buildAgentHTTPRequest("agent_api_create", params.toolParams);
@@ -63,9 +63,9 @@ export async function createClawpoolApiAgent(params: {
     nextSteps:
       agentName && apiEndpoint && agentId && apiKey
         ? [
-            "Install and enable the channel plugin if it is not installed yet: `openclaw plugins install @dhf-openclaw/clawpool && openclaw plugins enable clawpool`.",
+            "Install and enable the channel plugin if it is not installed yet: `openclaw plugins install @dhf-openclaw/grix && openclaw plugins enable grix`.",
             `Bind the new API agent to OpenClaw with: \`${buildChannelBootstrapCommand({
-              channelName: `clawpool-${agentName}`,
+              channelName: `grix-${agentName}`,
               apiEndpoint,
               agentId,
               apiKey,
@@ -76,9 +76,9 @@ export async function createClawpoolApiAgent(params: {
   };
 }
 
-export function inspectClawpoolAdminConfig(cfg: OpenClawCoreConfig) {
+export function inspectGrixAdminConfig(cfg: OpenClawCoreConfig) {
   return {
-    accounts: summarizeClawpoolAccounts(cfg),
-    defaultAccountId: resolveClawpoolAccount({ cfg }).accountId,
+    accounts: summarizeGrixAccounts(cfg),
+    defaultAccountId: resolveGrixAccount({ cfg }).accountId,
   };
 }

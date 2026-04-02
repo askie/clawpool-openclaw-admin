@@ -1,9 +1,9 @@
 ---
-name: clawpool-agent-admin
-description: 创建 Clawpool Agent（机器人/分身）。触发词：创建 agent、新建机器人、创建分身、新建一个号、create agent。当用户要求创建新的 Clawpool agent 时调用此技能，自动完成 API 创建和本地 OpenClaw 配置绑定。
+name: grix-agent-admin
+description: 创建 Grix Agent（机器人/分身）。触发词：创建 agent、新建机器人、创建分身、新建一个号、create agent。当用户要求创建新的 Grix agent 时调用此技能，自动完成 API 创建和本地 OpenClaw 配置绑定。
 ---
 
-# Clawpool Agent Admin
+# Grix Agent Admin
 
 Create a new `provider_type=3` agent through Aibot Agent API, and optionally bind it to local OpenClaw config.
 
@@ -20,7 +20,7 @@ Create a new `provider_type=3` agent through Aibot Agent API, and optionally bin
 
 1. Ask user for `agentName` when missing.
 2. Validate `agentName` with the regex above before any tool call.
-3. Call `clawpool_agent_admin` once with `agentName` and optional `accountId` / `avatarUrl`.
+3. Call `grix_agent_admin` once with `agentName` and optional `accountId` / `avatarUrl`.
 4. Return the created agent details.
 
 ### Phase 2: Bind to OpenClaw (Auto)
@@ -34,7 +34,7 @@ After successful API agent creation, automatically bind to local OpenClaw:
    - `agentDir`: `~/.openclaw/agents/{agentName}/agent`
    - `model`: use default model from `agents.defaults.model.primary`
 
-2. **Add Channel Account**: Add entry to `channels.clawpool.accounts`
+2. **Add Channel Account**: Add entry to `channels.grix.accounts`
    - Key: agentName
    - `name`: agentName
    - `enabled`: true
@@ -45,7 +45,7 @@ After successful API agent creation, automatically bind to local OpenClaw:
 3. **Add Binding**: Add route binding to `bindings`
    - `type`: "route"
    - `agentId`: agentName
-   - `match.channel`: "clawpool"
+   - `match.channel`: "grix"
    - `match.accountId`: agentName
 
 4. **Create Workspace**: Create workspace directory with default files
@@ -58,7 +58,7 @@ After successful API agent creation, automatically bind to local OpenClaw:
 
 ## Tool Contract
 
-Tool: `clawpool_agent_admin`
+Tool: `grix_agent_admin`
 
 Purpose: create an API-type agent under current owner.
 
@@ -66,7 +66,7 @@ Request payload:
 
 1. `agentName` (required, validated by regex)
 2. `avatarUrl` (optional)
-3. `accountId` (optional, when multiple Clawpool accounts are configured)
+3. `accountId` (optional, when multiple Grix accounts are configured)
 
 Guardrails:
 
@@ -89,7 +89,7 @@ Guardrails:
 }
 ```
 
-### channels.clawpool.accounts entry:
+### channels.grix.accounts entry:
 ```json
 "{agentName}": {
   "name": "{agentName}",
@@ -106,7 +106,7 @@ Guardrails:
   "type": "route",
   "agentId": "{agentName}",
   "match": {
-    "channel": "clawpool",
+    "channel": "grix",
     "accountId": "{agentName}"
   }
 }

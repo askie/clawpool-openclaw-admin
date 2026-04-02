@@ -1,13 +1,13 @@
 import type { AnyAgentTool, OpenClawPluginApi } from "openclaw/plugin-sdk/core";
 import { jsonToolResult } from "./json-result.js";
-import { runClawpoolGroupAction } from "./group-service.js";
+import { runGrixGroupAction } from "./group-service.js";
 
 const numericIdSchema = {
   type: "string",
   pattern: "^[0-9]+$",
 } as const;
 
-export const ClawpoolGroupToolSchema = {
+export const GrixGroupToolSchema = {
   oneOf: [
     {
       type: "object",
@@ -110,17 +110,17 @@ export const ClawpoolGroupToolSchema = {
   ],
 } as const;
 
-export function createClawpoolGroupTool(api: OpenClawPluginApi) {
+export function createGrixGroupTool(api: OpenClawPluginApi) {
   return {
-    name: "clawpool_group",
-    label: "Clawpool Group",
+    name: "grix_group",
+    label: "Grix Group",
     description:
-      "Manage Clawpool groups through typed admin operations. This tool only handles group lifecycle and membership changes.",
-    parameters: ClawpoolGroupToolSchema,
+      "Manage Grix groups through typed admin operations. This tool only handles group lifecycle and membership changes.",
+    parameters: GrixGroupToolSchema,
     async execute(_toolCallId: string, params: Record<string, unknown>) {
       try {
         return jsonToolResult(
-          await runClawpoolGroupAction({
+          await runGrixGroupAction({
             cfg: api.config as Record<string, unknown>,
             toolParams: params as never,
           }),

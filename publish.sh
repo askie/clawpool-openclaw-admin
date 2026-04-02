@@ -40,7 +40,7 @@ if [[ -n "$(git status -s)" ]]; then
 fi
 
 if [[ "${MODE}" == "--dry-run" ]]; then
-  echo "=> Dry-running @dhf-openclaw/clawpool-admin publish..."
+  echo "=> Dry-running @dhf-openclaw/grix-admin publish..."
   npm run publish:dry-run
   echo "=> Dry-run completed."
   exit 0
@@ -51,7 +51,7 @@ if [[ "${MODE}" != "publish" ]]; then
   exit 1
 fi
 
-echo "=> Publishing @dhf-openclaw/clawpool-admin to NPM (Public)..."
+echo "=> Publishing @dhf-openclaw/grix-admin to NPM (Public)..."
 ensure_registry_login
 run_with_auto_browser_auth npm run publish:npm
 

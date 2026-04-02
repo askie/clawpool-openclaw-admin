@@ -1,0 +1,4 @@
+interface:
+  display_name: "Grix Agent Admin"
+  short_description: "Use grix_agent_admin to create Grix API agents."
+  default_prompt: "Use this skill when users ask to create a new Grix API agent. Validate agentName, call grix_agent_admin once, and return the exact next-step commands for channel binding without editing local OpenClaw config automatically."

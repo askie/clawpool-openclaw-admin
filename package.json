@@ -1,7 +1,7 @@
 {
-  "name": "@dhf-openclaw/clawpool-admin",
+  "name": "@dhf-openclaw/grix-admin",
   "version": "0.2.7",
-  "description": "OpenClaw admin tools plugin for ClawPool",
+  "description": "OpenClaw admin tools plugin for Grix",
   "type": "module",
   "main": "./dist/index.js",
   "exports": {
@@ -11,7 +11,7 @@
     "openclaw",
     "plugin",
     "tools",
-    "clawpool",
+    "grix",
     "dhfpub"
   ],
   "license": "MIT",
@@ -57,7 +57,7 @@
       "./dist/index.js"
     ],
     "install": {
-      "npmSpec": "@dhf-openclaw/clawpool-admin",
+      "npmSpec": "@dhf-openclaw/grix-admin",
       "localPath": ".",
       "defaultChoice": "npm"
     }

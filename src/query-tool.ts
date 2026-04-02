@@ -1,8 +1,8 @@
 import type { AnyAgentTool, OpenClawPluginApi } from "openclaw/plugin-sdk/core";
 import { jsonToolResult } from "./json-result.js";
-import { runClawpoolQueryAction } from "./query-service.js";
+import { runGrixQueryAction } from "./query-service.js";
 
-export const ClawpoolQueryToolSchema = {
+export const GrixQueryToolSchema = {
   oneOf: [
     {
       type: "object",
@@ -43,17 +43,17 @@ export const ClawpoolQueryToolSchema = {
   ],
 } as const;
 
-export function createClawpoolQueryTool(api: OpenClawPluginApi) {
+export function createGrixQueryTool(api: OpenClawPluginApi) {
   return {
-    name: "clawpool_query",
-    label: "Clawpool Query",
+    name: "grix_query",
+    label: "Grix Query",
     description:
-      "Search Clawpool contacts and sessions, or read session message history through typed query operations.",
-    parameters: ClawpoolQueryToolSchema,
+      "Search Grix contacts and sessions, or read session message history through typed query operations.",
+    parameters: GrixQueryToolSchema,
     async execute(_toolCallId: string, params: Record<string, unknown>) {
       try {
         return jsonToolResult(
-          await runClawpoolQueryAction({
+          await runGrixQueryAction({
             cfg: api.config as Record<string, unknown>,
             toolParams: params as never,
           }),

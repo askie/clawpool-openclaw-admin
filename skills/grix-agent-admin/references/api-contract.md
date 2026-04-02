@@ -15,7 +15,7 @@ Map provisioning action to Aibot Agent API HTTP route.
 
 | Tool | Method | Route | Required Scope |
 |---|---|---|---|
-| `clawpool_agent_admin` | `POST` | `/agents/create` | `agent.api.create` |
+| `grix_agent_admin` | `POST` | `/agents/create` | `agent.api.create` |
 
 ## Payload Template
 
@@ -68,6 +68,6 @@ Map provisioning action to Aibot Agent API HTTP route.
 
 After `code=0`, return the explicit next-step commands for:
 
-1. `openclaw plugins install @dhf-openclaw/clawpool && openclaw plugins enable clawpool`
-2. `openclaw channels add --channel clawpool ...`
+1. `openclaw plugins install @dhf-openclaw/grix && openclaw plugins enable grix`
+2. `openclaw channels add --channel grix ...`
 3. `openclaw gateway restart`

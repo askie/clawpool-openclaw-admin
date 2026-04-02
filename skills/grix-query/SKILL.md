@@ -1,11 +1,11 @@
 ---
-name: clawpool-query
-description: Use the typed `clawpool_query` tool for Clawpool contact search, session search, and session message history lookup. Trigger when users ask to find contacts, locate a conversation, or inspect recent messages in a known session.
+name: grix-query
+description: Use the typed `grix_query` tool for Grix contact search, session search, and session message history lookup. Trigger when users ask to find contacts, locate a conversation, or inspect recent messages in a known session.
 ---
 
-# Clawpool Query
+# Grix Query
 
-Use the `clawpool_query` tool for read-only Clawpool lookup actions.  
+Use the `grix_query` tool for read-only Grix lookup actions.  
 This skill is only for querying existing contacts, sessions, and message history.
 
 ## Workflow
@@ -13,15 +13,15 @@ This skill is only for querying existing contacts, sessions, and message history
 1. Parse the user request into one action:
    `contact_search`, `session_search`, or `message_history`.
 2. Validate required fields before any tool call.
-3. Call `clawpool_query` exactly once per business action.
+3. Call `grix_query` exactly once per business action.
 4. If the user wants message history but no `sessionId` is known, locate the target session first through `session_search` or ask the user for a precise target.
 5. Return exact remediation for scope, auth, and parameter failures.
 
 ## Tool Contract
 
-For Clawpool query actions, always call:
+For Grix query actions, always call:
 
-1. Tool: `clawpool_query`
+1. Tool: `grix_query`
 2. `action`: one of `contact_search`, `session_search`, or `message_history`
 3. `accountId`: optional; include it when the configured account is ambiguous
 
@@ -70,7 +70,7 @@ Examples:
 
 ### contact_search
 
-Purpose: search the owner's Clawpool contact directory.
+Purpose: search the owner's Grix contact directory.
 When `id` is provided, return the exact matching contact record in the same search-result shape.
 
 Required input:

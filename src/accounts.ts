@@ -1,8 +1,8 @@
 import type {
-  ClawpoolAccountConfig,
-  ClawpoolConfig,
+  GrixAccountConfig,
+  GrixConfig,
   OpenClawCoreConfig,
-  ResolvedClawpoolAccount,
+  ResolvedGrixAccount,
 } from "./types.js";
 
 const DEFAULT_ACCOUNT_ID = "default";
@@ -17,12 +17,12 @@ function normalizeOptionalAccountId(value: unknown): string | undefined {
   return normalized || undefined;
 }
 
-function rawClawpoolConfig(cfg: OpenClawCoreConfig): ClawpoolConfig {
-  return (cfg.channels?.clawpool as ClawpoolConfig | undefined) ?? {};
+function rawGrixConfig(cfg: OpenClawCoreConfig): GrixConfig {
+  return (cfg.channels?.grix as GrixConfig | undefined) ?? {};
 }
 
 function listConfiguredAccountIds(cfg: OpenClawCoreConfig): string[] {
-  const accounts = rawClawpoolConfig(cfg).accounts;
+  const accounts = rawGrixConfig(cfg).accounts;
   if (!accounts || typeof accounts !== "object") {
     return [];
   }
@@ -58,8 +58,8 @@ function appendAgentIdToWsUrl(rawWsUrl: string, agentId: string): string {
   }
 }
 
-function resolveWsUrl(merged: ClawpoolAccountConfig, agentId: string): string {
-  const envWs = normalizeNonEmpty(process.env.CLAWPOOL_WS_URL);
+function resolveWsUrl(merged: GrixAccountConfig, agentId: string): string {
+  const envWs = normalizeNonEmpty(process.env.GRIX_WS_URL);
   const cfgWs = normalizeNonEmpty(merged.wsUrl);
   const ws = cfgWs || envWs;
   if (ws) {
@@ -74,17 +74,17 @@ function resolveWsUrl(merged: ClawpoolAccountConfig, agentId: string): string {
 function resolveMergedAccountConfig(
   cfg: OpenClawCoreConfig,
   accountId: string,
-): ClawpoolAccountConfig {
-  const clawpoolCfg = rawClawpoolConfig(cfg);
-  const { accounts: _ignoredAccounts, defaultAccount: _ignoredDefault, ...base } = clawpoolCfg;
-  const account = clawpoolCfg.accounts?.[accountId] ?? {};
+): GrixAccountConfig {
+  const grixCfg = rawGrixConfig(cfg);
+  const { accounts: _ignoredAccounts, defaultAccount: _ignoredDefault, ...base } = grixCfg;
+  const account = grixCfg.accounts?.[accountId] ?? {};
   return {
     ...base,
     ...account,
   };
 }
 
-export function listClawpoolAccountIds(cfg: OpenClawCoreConfig): string[] {
+export function listGrixAccountIds(cfg: OpenClawCoreConfig): string[] {
   const ids = listConfiguredAccountIds(cfg);
   if (ids.length === 0) {
     return [DEFAULT_ACCOUNT_ID];
@@ -92,39 +92,39 @@ export function listClawpoolAccountIds(cfg: OpenClawCoreConfig): string[] {
   return ids.toSorted((a, b) => a.localeCompare(b));
 }
 
-export function resolveDefaultClawpoolAccountId(cfg: OpenClawCoreConfig): string {
-  const clawpoolCfg = rawClawpoolConfig(cfg);
-  const preferred = normalizeOptionalAccountId(clawpoolCfg.defaultAccount);
+export function resolveDefaultGrixAccountId(cfg: OpenClawCoreConfig): string {
+  const grixCfg = rawGrixConfig(cfg);
+  const preferred = normalizeOptionalAccountId(grixCfg.defaultAccount);
   if (
     preferred &&
-    listClawpoolAccountIds(cfg).some((accountId) => normalizeAccountId(accountId) === preferred)
+    listGrixAccountIds(cfg).some((accountId) => normalizeAccountId(accountId) === preferred)
   ) {
     return preferred;
   }
 
-  const ids = listClawpoolAccountIds(cfg);
+  const ids = listGrixAccountIds(cfg);
   if (ids.includes(DEFAULT_ACCOUNT_ID)) {
     return DEFAULT_ACCOUNT_ID;
   }
   return ids[0] ?? DEFAULT_ACCOUNT_ID;
 }
 
-export function resolveClawpoolAccount(params: {
+export function resolveGrixAccount(params: {
   cfg: OpenClawCoreConfig;
   accountId?: string | null;
-}): ResolvedClawpoolAccount {
+}): ResolvedGrixAccount {
   const accountId =
     params.accountId == null || String(params.accountId).trim() === ""
-      ? resolveDefaultClawpoolAccountId(params.cfg)
+      ? resolveDefaultGrixAccountId(params.cfg)
       : normalizeAccountId(params.accountId);
   const merged = resolveMergedAccountConfig(params.cfg, accountId);
 
-  const baseEnabled = rawClawpoolConfig(params.cfg).enabled !== false;
+  const baseEnabled = rawGrixConfig(params.cfg).enabled !== false;
   const accountEnabled = merged.enabled !== false;
   const enabled = baseEnabled && accountEnabled;
 
-  const agentId = normalizeNonEmpty(merged.agentId || process.env.CLAWPOOL_AGENT_ID);
-  const apiKey = normalizeNonEmpty(merged.apiKey || process.env.CLAWPOOL_API_KEY);
+  const agentId = normalizeNonEmpty(merged.agentId || process.env.GRIX_AGENT_ID);
+  const apiKey = normalizeNonEmpty(merged.apiKey || process.env.GRIX_API_KEY);
   const wsUrl = resolveWsUrl(merged, agentId);
   const configured = Boolean(wsUrl && agentId && apiKey);
 
@@ -140,9 +140,9 @@ export function resolveClawpoolAccount(params: {
   };
 }
 
-export function summarizeClawpoolAccounts(cfg: OpenClawCoreConfig): Array<Record<string, unknown>> {
-  return listClawpoolAccountIds(cfg).map((accountId) => {
-    const account = resolveClawpoolAccount({ cfg, accountId });
+export function summarizeGrixAccounts(cfg: OpenClawCoreConfig): Array<Record<string, unknown>> {
+  return listGrixAccountIds(cfg).map((accountId) => {
+    const account = resolveGrixAccount({ cfg, accountId });
     return {
       accountId: account.accountId,
       name: account.name ?? null,

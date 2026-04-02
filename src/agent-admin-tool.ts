@@ -1,8 +1,8 @@
 import type { AnyAgentTool, OpenClawPluginApi } from "openclaw/plugin-sdk/core";
-import { createClawpoolApiAgent } from "./agent-admin-service.js";
+import { createGrixApiAgent } from "./agent-admin-service.js";
 import { jsonToolResult } from "./json-result.js";
 
-export const ClawpoolAgentAdminToolSchema = {
+export const GrixAgentAdminToolSchema = {
   type: "object",
   additionalProperties: false,
   properties: {
@@ -17,17 +17,17 @@ export const ClawpoolAgentAdminToolSchema = {
   required: ["agentName"],
 } as const;
 
-export function createClawpoolAgentAdminTool(api: OpenClawPluginApi) {
+export function createGrixAgentAdminTool(api: OpenClawPluginApi) {
   return {
-    name: "clawpool_agent_admin",
-    label: "Clawpool Agent Admin",
+    name: "grix_agent_admin",
+    label: "Grix Agent Admin",
     description:
-      "Create Clawpool API agents with typed parameters. This tool does not modify local OpenClaw channel config.",
-    parameters: ClawpoolAgentAdminToolSchema,
+      "Create Grix API agents with typed parameters. This tool does not modify local OpenClaw channel config.",
+    parameters: GrixAgentAdminToolSchema,
     async execute(_toolCallId: string, params: Record<string, unknown>) {
       try {
         return jsonToolResult(
-          await createClawpoolApiAgent({
+          await createGrixApiAgent({
             cfg: api.config as Record<string, unknown>,
             toolParams: params,
           }),

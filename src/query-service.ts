@@ -1,18 +1,18 @@
 import { buildAgentHTTPRequest } from "./agent-api-actions.js";
 import { callAgentAPI } from "./agent-api-http.js";
-import { resolveClawpoolAccount } from "./accounts.js";
+import { resolveGrixAccount } from "./accounts.js";
 import type { OpenClawCoreConfig } from "./types.js";
 
-export const CLAWPOOL_QUERY_TOOL_ACTIONS = [
+export const GRIX_QUERY_TOOL_ACTIONS = [
   "contact_search",
   "session_search",
   "message_history",
 ] as const;
 
-export type ClawpoolQueryToolAction = (typeof CLAWPOOL_QUERY_TOOL_ACTIONS)[number];
+export type GrixQueryToolAction = (typeof GRIX_QUERY_TOOL_ACTIONS)[number];
 
-export type ClawpoolQueryToolParams = {
-  action: ClawpoolQueryToolAction;
+export type GrixQueryToolParams = {
+  action: GrixQueryToolAction;
   accountId?: string;
   id?: string;
   sessionId?: string;
@@ -21,7 +21,7 @@ export type ClawpoolQueryToolParams = {
   offset?: number;
 };
 
-function mapQueryActionToRequestAction(action: ClawpoolQueryToolAction) {
+function mapQueryActionToRequestAction(action: GrixQueryToolAction) {
   switch (action) {
     case "contact_search":
       return "contact_search" as const;
@@ -31,23 +31,23 @@ function mapQueryActionToRequestAction(action: ClawpoolQueryToolAction) {
       return "message_history" as const;
     default:
       action satisfies never;
-      throw new Error(`Unsupported Clawpool query action: ${String(action)}`);
+      throw new Error(`Unsupported Grix query action: ${String(action)}`);
   }
 }
 
-export async function runClawpoolQueryAction(params: {
+export async function runGrixQueryAction(params: {
   cfg: OpenClawCoreConfig;
-  toolParams: ClawpoolQueryToolParams;
+  toolParams: GrixQueryToolParams;
 }) {
-  const account = resolveClawpoolAccount({
+  const account = resolveGrixAccount({
     cfg: params.cfg,
     accountId: params.toolParams.accountId,
   });
   if (!account.enabled) {
-    throw new Error(`Clawpool account "${account.accountId}" is disabled.`);
+    throw new Error(`Grix account "${account.accountId}" is disabled.`);
   }
   if (!account.configured) {
-    throw new Error(`Clawpool account "${account.accountId}" is not configured.`);
+    throw new Error(`Grix account "${account.accountId}" is not configured.`);
   }
 
   const requestAction = mapQueryActionToRequestAction(params.toolParams.action);

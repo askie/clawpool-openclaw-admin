@@ -1,4 +1,4 @@
-export type ClawpoolAccountConfig = {
+export type GrixAccountConfig = {
   enabled?: boolean;
   name?: string;
   wsUrl?: string;
@@ -6,20 +6,20 @@ export type ClawpoolAccountConfig = {
   apiKey?: string;
 };
 
-export type ClawpoolConfig = ClawpoolAccountConfig & {
+export type GrixConfig = GrixAccountConfig & {
   defaultAccount?: string;
-  accounts?: Record<string, ClawpoolAccountConfig>;
+  accounts?: Record<string, GrixAccountConfig>;
 };
 
 export type OpenClawCoreConfig = {
   channels?: {
-    clawpool?: ClawpoolConfig;
+    grix?: GrixConfig;
     [key: string]: unknown;
   };
   [key: string]: unknown;
 };
 
-export type ResolvedClawpoolAccount = {
+export type ResolvedGrixAccount = {
   accountId: string;
   name?: string;
   enabled: boolean;
@@ -27,7 +27,7 @@ export type ResolvedClawpoolAccount = {
   wsUrl: string;
   agentId: string;
   apiKey: string;
-  config: ClawpoolAccountConfig;
+  config: GrixAccountConfig;
 };
 
 export type AgentToolResult = {

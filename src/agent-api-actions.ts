@@ -46,7 +46,7 @@ function readStringParam(params: Record<string, unknown>, key: string): string {
 function readRequiredStringParam(params: Record<string, unknown>, key: string): string {
   const value = readStringParam(params, key);
   if (!value) {
-    throw new Error(`Clawpool action requires ${key}.`);
+    throw new Error(`Grix action requires ${key}.`);
   }
   return value;
 }
@@ -57,7 +57,7 @@ function readArrayParam(params: Record<string, unknown>, key: string): unknown[]
     return undefined;
   }
   if (!Array.isArray(raw)) {
-    throw new Error(`Clawpool action requires ${key} as array.`);
+    throw new Error(`Grix action requires ${key} as array.`);
   }
   return raw;
 }
@@ -70,7 +70,7 @@ function readNumericIDArray(
   const values = readArrayParam(params, key);
   if (!values || values.length == 0) {
     if (required) {
-      throw new Error(`Clawpool action requires non-empty ${key}.`);
+      throw new Error(`Grix action requires non-empty ${key}.`);
     }
     return [];
   }
@@ -84,7 +84,7 @@ function readNumericIDArray(
           ? String(Math.trunc(item))
           : "";
     if (!/^\d+$/.test(value)) {
-      throw new Error(`Clawpool action ${key} must contain numeric IDs.`);
+      throw new Error(`Grix action ${key} must contain numeric IDs.`);
     }
     normalized.push(value);
   }
@@ -101,7 +101,7 @@ function readIntArray(params: Record<string, unknown>, key: string): number[] {
   for (const item of values) {
     const num = typeof item === "number" ? item : Number(String(item ?? "").trim());
     if (!Number.isInteger(num)) {
-      throw new Error(`Clawpool action ${key} must contain integers.`);
+      throw new Error(`Grix action ${key} must contain integers.`);
     }
     normalized.push(num);
   }
@@ -115,7 +115,7 @@ function readOptionalInt(params: Record<string, unknown>, key: string): number |
   }
   const num = typeof raw === "number" ? raw : Number(String(raw).trim());
   if (!Number.isInteger(num)) {
-    throw new Error(`Clawpool action ${key} must be an integer.`);
+    throw new Error(`Grix action ${key} must be an integer.`);
   }
   return num;
 }
@@ -123,7 +123,7 @@ function readOptionalInt(params: Record<string, unknown>, key: string): number |
 function readRequiredInt(params: Record<string, unknown>, key: string): number {
   const value = readOptionalInt(params, key);
   if (value == null) {
-    throw new Error(`Clawpool action requires ${key}.`);
+    throw new Error(`Grix action requires ${key}.`);
   }
   return value;
 }
@@ -145,13 +145,13 @@ function readOptionalBool(params: Record<string, unknown>, key: string): boolean
     if (normalized === "true" || normalized === "1") return true;
     if (normalized === "false" || normalized === "0") return false;
   }
-  throw new Error(`Clawpool action ${key} must be a boolean.`);
+  throw new Error(`Grix action ${key} must be a boolean.`);
 }
 
 function readRequiredBool(params: Record<string, unknown>, key: string): boolean {
   const value = readOptionalBool(params, key);
   if (value == null) {
-    throw new Error(`Clawpool action requires ${key}.`);
+    throw new Error(`Grix action requires ${key}.`);
   }
   return value;
 }
@@ -159,20 +159,20 @@ function readRequiredBool(params: Record<string, unknown>, key: string): boolean
 function ensureMemberTypes(types: number[]): void {
   for (const memberType of types) {
     if (memberType !== 1 && memberType !== 2) {
-      throw new Error("Clawpool action member_types only supports 1 (human) or 2 (agent).");
+      throw new Error("Grix action member_types only supports 1 (human) or 2 (agent).");
     }
   }
 }
 
 function ensureMemberType(memberType: number): void {
   if (memberType !== 1) {
-    throw new Error("Clawpool action member_type only supports 1 for role update.");
+    throw new Error("Grix action member_type only supports 1 for role update.");
   }
 }
 
 function ensureSpeakingMemberType(memberType: number): void {
   if (memberType !== 1 && memberType !== 2) {
-    throw new Error("Clawpool action member_type only supports 1 (human) or 2 (agent).");
+    throw new Error("Grix action member_type only supports 1 (human) or 2 (agent).");
   }
 }
 
@@ -183,7 +183,7 @@ function buildGroupCreateRequest(params: Record<string, unknown>): AgentHTTPRequ
   if (memberTypes.length > 0) {
     ensureMemberTypes(memberTypes);
     if (memberIDs.length == 0 || memberTypes.length !== memberIDs.length) {
-      throw new Error("Clawpool action memberTypes length must match memberIds.");
+      throw new Error("Grix action memberTypes length must match memberIds.");
     }
   }
 
@@ -210,7 +210,7 @@ function buildGroupMemberAddRequest(params: Record<string, unknown>): AgentHTTPR
   if (memberTypes.length > 0) {
     ensureMemberTypes(memberTypes);
     if (memberTypes.length !== memberIDs.length) {
-      throw new Error("Clawpool action memberTypes length must match memberIds.");
+      throw new Error("Grix action memberTypes length must match memberIds.");
     }
   }
 
@@ -237,7 +237,7 @@ function buildGroupMemberRemoveRequest(params: Record<string, unknown>): AgentHT
   if (memberTypes.length > 0) {
     ensureMemberTypes(memberTypes);
     if (memberTypes.length !== memberIDs.length) {
-      throw new Error("Clawpool action memberTypes length must match memberIds.");
+      throw new Error("Grix action memberTypes length must match memberIds.");
     }
   }
 
@@ -261,11 +261,11 @@ function buildGroupMemberRoleUpdateRequest(params: Record<string, unknown>): Age
   const sessionID = readRequiredStringParam(params, "sessionId");
   const memberID = readRequiredStringParam(params, "memberId");
   if (!/^\d+$/.test(memberID)) {
-    throw new Error("Clawpool action memberId must be numeric.");
+    throw new Error("Grix action memberId must be numeric.");
   }
   const role = readRequiredInt(params, "role");
   if (role !== 1 && role !== 2) {
-    throw new Error("Clawpool action role only supports 1 or 2.");
+    throw new Error("Grix action role only supports 1 or 2.");
   }
   const memberType = readOptionalInt(params, "memberType") ?? 1;
   ensureMemberType(memberType);
@@ -317,7 +317,7 @@ function buildGroupMemberSpeakingUpdateRequest(
   const sessionID = readRequiredStringParam(params, "sessionId");
   const memberID = readRequiredStringParam(params, "memberId");
   if (!/^\d+$/.test(memberID)) {
-    throw new Error("Clawpool action memberId must be numeric.");
+    throw new Error("Grix action memberId must be numeric.");
   }
   const memberType = readOptionalInt(params, "memberType") ?? 1;
   ensureSpeakingMemberType(memberType);
@@ -325,7 +325,7 @@ function buildGroupMemberSpeakingUpdateRequest(
   const canSpeakWhenAllMuted = readOptionalBool(params, "canSpeakWhenAllMuted");
   if (isSpeakMuted == null && canSpeakWhenAllMuted == null) {
     throw new Error(
-      "Clawpool action update_member_speaking requires isSpeakMuted or canSpeakWhenAllMuted.",
+      "Grix action update_member_speaking requires isSpeakMuted or canSpeakWhenAllMuted.",
     );
   }
 
@@ -433,7 +433,7 @@ function buildMessageHistoryRequest(params: Record<string, unknown>): AgentHTTPR
 function buildAgentAPICreateRequest(params: Record<string, unknown>): AgentHTTPRequest {
   const agentName = readRequiredStringParam(params, "agentName");
   if (!AGENT_NAME_RE.test(agentName)) {
-    throw new Error("Clawpool action agentName must match ^[a-z][a-z0-9-]{2,31}$.");
+    throw new Error("Grix action agentName must match ^[a-z][a-z0-9-]{2,31}$.");
   }
 
   const avatarURL = readStringParam(params, "avatarUrl");
@@ -486,6 +486,6 @@ export function buildAgentHTTPRequest(
     case "agent_api_create":
       return buildAgentAPICreateRequest(params);
     default:
-      throw new Error(`Clawpool action ${action} is not supported.`);
+      throw new Error(`Grix action ${action} is not supported.`);
   }
 }

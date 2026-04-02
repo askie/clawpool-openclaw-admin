@@ -1,11 +1,11 @@
-import type { ResolvedClawpoolAccount } from "./types.js";
+import type { ResolvedGrixAccount } from "./types.js";
 
 const DEFAULT_HTTP_TIMEOUT_MS = 15_000;
 
 type AgentAPIHTTPMethod = "GET" | "POST";
 
 type CallAgentAPIParams = {
-  account: ResolvedClawpoolAccount;
+  account: ResolvedGrixAccount;
   actionName: string;
   method: AgentAPIHTTPMethod;
   path: string;
@@ -26,7 +26,7 @@ function trimTrailingSlash(value: string): string {
 
 function resolveExplicitAgentAPIBase(): string {
   const base = String(
-    process.env.CLAWPOOL_AGENT_API_BASE ?? process.env.AIBOT_AGENT_API_BASE ?? "",
+    process.env.GRIX_AGENT_API_BASE ?? process.env.AIBOT_AGENT_API_BASE ?? "",
   ).trim();
   if (!base) {
     return "";
@@ -37,19 +37,19 @@ function resolveExplicitAgentAPIBase(): string {
 function deriveAgentAPIBaseFromWsUrl(wsUrl: string): string {
   const normalizedWsUrl = String(wsUrl ?? "").trim();
   if (!normalizedWsUrl) {
-    throw new Error("Clawpool account wsUrl is missing");
+    throw new Error("Grix account wsUrl is missing");
   }
 
   let parsed: URL;
   try {
     parsed = new URL(normalizedWsUrl);
   } catch {
-    throw new Error(`Clawpool wsUrl is invalid: ${normalizedWsUrl}`);
+    throw new Error(`Grix wsUrl is invalid: ${normalizedWsUrl}`);
   }
 
   const protocol = parsed.protocol === "wss:" ? "https:" : parsed.protocol === "ws:" ? "http:" : "";
   if (!protocol) {
-    throw new Error(`Clawpool wsUrl must start with ws:// or wss://: ${normalizedWsUrl}`);
+    throw new Error(`Grix wsUrl must start with ws:// or wss://: ${normalizedWsUrl}`);
   }
 
   const marker = "/v1/agent-api/ws";
@@ -86,7 +86,7 @@ function deriveLocalAgentAPIBaseFromWsUrl(wsUrl: string): string {
   return trimTrailingSlash(`${protocol}//${parsed.hostname}:${apiPort}`) + "/v1/agent-api";
 }
 
-export function resolveAgentAPIBase(account: ResolvedClawpoolAccount): string {
+export function resolveAgentAPIBase(account: ResolvedGrixAccount): string {
   const explicit = resolveExplicitAgentAPIBase();
   if (explicit) {
     return explicit;
@@ -168,7 +168,7 @@ export async function callAgentAPI<TData = unknown>(params: CallAgentAPIParams):
   } catch (error) {
     clearTimeout(timer);
     throw new Error(
-      `Clawpool ${params.actionName} network error: ${extractNetworkErrorMessage(error)}`,
+      `Grix ${params.actionName} network error: ${extractNetworkErrorMessage(error)}`,
     );
   }
   clearTimeout(timer);
@@ -181,7 +181,7 @@ export async function callAgentAPI<TData = unknown>(params: CallAgentAPIParams):
     envelope = JSON.parse(rawBody) as AgentAPIEnvelope<TData>;
   } catch {
     throw new Error(
-      `Clawpool ${params.actionName} invalid response: status=${status} body=${rawBody.slice(0, 256)}`,
+      `Grix ${params.actionName} invalid response: status=${status} body=${rawBody.slice(0, 256)}`,
     );
   }
 
@@ -189,7 +189,7 @@ export async function callAgentAPI<TData = unknown>(params: CallAgentAPIParams):
   if (!resp.ok || bizCode !== 0) {
     const message = normalizeMessage(envelope.msg);
     throw new Error(
-      `Clawpool ${params.actionName} failed: status=${status} code=${bizCode} msg=${message}`,
+      `Grix ${params.actionName} failed: status=${status} code=${bizCode} msg=${message}`,
     );
   }
 

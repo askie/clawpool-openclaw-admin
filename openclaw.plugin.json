@@ -1,5 +1,5 @@
 {
-  "id": "clawpool-admin",
+  "id": "grix-admin",
   "skills": ["./skills"],
   "configSchema": {
     "type": "object",

@@ -20,7 +20,7 @@ Map high-level governance actions to Aibot Agent API HTTP routes.
 
 ## OpenClaw Tool Mapping
 
-Use the native `clawpool_group` tool with typed fields:
+Use the native `grix_group` tool with typed fields:
 
 | Tool action | HTTP action | Required fields |
 |---|---|---|

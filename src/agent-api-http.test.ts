@@ -1,17 +1,17 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { callAgentAPI, resolveAgentAPIBase } from "./agent-api-http.ts";
-import type { ResolvedClawpoolAccount } from "./types.ts";
+import type { ResolvedGrixAccount } from "./types.ts";
 
 function buildAccount(
-  overrides: Partial<ResolvedClawpoolAccount> = {},
-): ResolvedClawpoolAccount {
+  overrides: Partial<ResolvedGrixAccount> = {},
+): ResolvedGrixAccount {
   return {
     accountId: "default",
     name: "default",
     enabled: true,
     configured: true,
-    wsUrl: "wss://clawpool.dhf.pub/v1/agent-api/ws?agent_id=9992",
+    wsUrl: "wss://grix.dhf.pub/v1/agent-api/ws?agent_id=9992",
     agentId: "9992",
     apiKey: "ak_test_xxx",
     config: {},
@@ -22,10 +22,10 @@ function buildAccount(
 test("resolveAgentAPIBase derives from ws url", () => {
   const base = resolveAgentAPIBase(
     buildAccount({
-      wsUrl: "wss://clawpool.dhf.pub/abc/v1/agent-api/ws?agent_id=123",
+      wsUrl: "wss://grix.dhf.pub/abc/v1/agent-api/ws?agent_id=123",
     }),
   );
-  assert.equal(base, "https://clawpool.dhf.pub/abc/v1/agent-api");
+  assert.equal(base, "https://grix.dhf.pub/abc/v1/agent-api");
 });
 
 test("resolveAgentAPIBase maps localhost ws port 27189 to 27180", () => {
@@ -38,14 +38,14 @@ test("resolveAgentAPIBase maps localhost ws port 27189 to 27180", () => {
 });
 
 test("resolveAgentAPIBase prefers explicit env override", (t) => {
-  const previous = process.env.CLAWPOOL_AGENT_API_BASE;
-  process.env.CLAWPOOL_AGENT_API_BASE = "https://example.com/base/";
+  const previous = process.env.GRIX_AGENT_API_BASE;
+  process.env.GRIX_AGENT_API_BASE = "https://example.com/base/";
   t.after(() => {
     if (previous == null) {
-      delete process.env.CLAWPOOL_AGENT_API_BASE;
+      delete process.env.GRIX_AGENT_API_BASE;
       return;
     }
-    process.env.CLAWPOOL_AGENT_API_BASE = previous;
+    process.env.GRIX_AGENT_API_BASE = previous;
   });
 
   const base = resolveAgentAPIBase(buildAccount());
@@ -96,7 +96,7 @@ test("callAgentAPI sends bearer request and parses success payload", async (t) =
     },
   });
 
-  assert.equal(capturedURL, "https://clawpool.dhf.pub/v1/agent-api/sessions/create_group");
+  assert.equal(capturedURL, "https://grix.dhf.pub/v1/agent-api/sessions/create_group");
   assert.equal(capturedMethod, "POST");
   assert.equal(capturedAuth, `Bearer ${account.apiKey}`);
   assert.match(capturedBody, /ops-room/);

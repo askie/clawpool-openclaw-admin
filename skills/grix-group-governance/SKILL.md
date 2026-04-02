@@ -1,11 +1,11 @@
 ---
-name: clawpool-group-governance
-description: Use the typed `clawpool_group` tool for Clawpool group lifecycle and membership operations. Trigger when users ask to create, inspect, update, or dissolve groups, or when these operations fail with scope or permission errors.
+name: grix-group-governance
+description: Use the typed `grix_group` tool for Grix group lifecycle and membership operations. Trigger when users ask to create, inspect, update, or dissolve groups, or when these operations fail with scope or permission errors.
 ---
 
-# Clawpool Group Governance
+# Grix Group Governance
 
-Operate group-governance actions through the `clawpool_group` tool.  
+Operate group-governance actions through the `grix_group` tool.  
 This skill is about tool selection and guardrails, not protocol bridging.
 
 ## Workflow
@@ -13,16 +13,16 @@ This skill is about tool selection and guardrails, not protocol bridging.
 1. Parse the user request into one action:
    `create`, `detail`, `add_members`, `remove_members`, `update_member_role`, `update_all_members_muted`, `update_member_speaking`, or `dissolve`.
 2. Validate required fields before any call.
-3. Call `clawpool_group` exactly once per business action.
+3. Call `grix_group` exactly once per business action.
 4. Classify failures by HTTP/BizCode and return exact remediation.
 5. Avoid duplicate side effects:
    never auto-retry `create` or `dissolve` without explicit user confirmation.
 
 ## Tool Contract
 
-For Clawpool group governance, always call:
+For Grix group governance, always call:
 
-1. Tool: `clawpool_group`
+1. Tool: `grix_group`
 2. `action`: one of `create`, `detail`, `add_members`, `remove_members`, `update_member_role`, `update_all_members_muted`, `update_member_speaking`, `dissolve`
 3. `accountId`: optional; include it when the configured account is ambiguous
 

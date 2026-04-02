@@ -1,24 +1,24 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
-  listClawpoolAccountIds,
-  resolveClawpoolAccount,
-  resolveDefaultClawpoolAccountId,
+  listGrixAccountIds,
+  resolveGrixAccount,
+  resolveDefaultGrixAccountId,
 } from "./accounts.ts";
 
-test("resolveDefaultClawpoolAccountId prefers explicit defaultAccount", () => {
+test("resolveDefaultGrixAccountId prefers explicit defaultAccount", () => {
   const cfg = {
     channels: {
-      clawpool: {
+      grix: {
         defaultAccount: "ops",
         accounts: {
           ops: {
-            wsUrl: "wss://clawpool.dhf.pub/v1/agent-api/ws",
+            wsUrl: "wss://grix.dhf.pub/v1/agent-api/ws",
             agentId: "1001",
             apiKey: "ak_ops",
           },
           backup: {
-            wsUrl: "wss://clawpool.dhf.pub/v1/agent-api/ws",
+            wsUrl: "wss://grix.dhf.pub/v1/agent-api/ws",
             agentId: "1002",
             apiKey: "ak_backup",
           },
@@ -27,16 +27,16 @@ test("resolveDefaultClawpoolAccountId prefers explicit defaultAccount", () => {
     },
   } as never;
 
-  assert.equal(resolveDefaultClawpoolAccountId(cfg), "ops");
-  assert.deepEqual(listClawpoolAccountIds(cfg), ["backup", "ops"]);
+  assert.equal(resolveDefaultGrixAccountId(cfg), "ops");
+  assert.deepEqual(listGrixAccountIds(cfg), ["backup", "ops"]);
 });
 
-test("resolveClawpoolAccount merges base and account-scoped config", () => {
-  const account = resolveClawpoolAccount({
+test("resolveGrixAccount merges base and account-scoped config", () => {
+  const account = resolveGrixAccount({
     cfg: {
       channels: {
-        clawpool: {
-          wsUrl: "wss://clawpool.dhf.pub/v1/agent-api/ws",
+        grix: {
+          wsUrl: "wss://grix.dhf.pub/v1/agent-api/ws",
           accounts: {
             ops: {
               agentId: "1001",
